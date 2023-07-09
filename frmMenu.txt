@@ -1,0 +1,316 @@
+package pFormulario;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import java.awt.SystemColor;
+import javax.swing.border.EtchedBorder;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollBar;
+
+public class frmMenu extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtDato;
+	private JTextField txtRestante;
+	private JPanel panel_1;
+	private JTextField txtDeposito;
+	private JComboBox cboUsu;
+	private JList lstDeposito;
+	private JTextField txtRetiro;
+	private JList lstRetiro;
+	private JButton btnDeposito;
+	private JButton btnRetiro;
+	private JButton btnLimpiar;
+	private JButton btnCambio;
+	private JButton btnSalir;
+
+	DefaultListModel moR=new DefaultListModel();
+	DefaultListModel<String> moD = new DefaultListModel<>();
+	private JTextField txtInicial;
+	
+	private String datoRecibido;
+    private double saldoInicial;
+    private double saldoRestante;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					frmMenu frame = new frmMenu();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	
+	public void setDatoRecibido(String dato) {
+        this.datoRecibido = dato;
+        txtDato.setText(datoRecibido);
+
+        // Obtener el saldo inicial según el usuario
+        if (datoRecibido.equals("Eliot")) {
+            saldoInicial = 500;
+        } else if (datoRecibido.equals("Mateo")) {
+            saldoInicial = 600;
+        } else if (datoRecibido.equals("Oscar")) {
+            saldoInicial = 700;
+        } else if (datoRecibido.equals("Andres")) {
+            saldoInicial = 800;
+        }
+
+        saldoRestante = saldoInicial;
+
+        txtInicial.setText(String.valueOf(saldoInicial));
+        txtRestante.setText(String.valueOf(saldoRestante));
+        
+        txtDato.setText(dato);
+    }
+
+	/**
+	 * Create the frame.
+	 */
+	public frmMenu() {
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 777, 558);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(70, 130, 180));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("MENÚ PRINCIPAL");
+		lblNewLabel.setForeground(new Color(245, 245, 220));
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.ITALIC, 60));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 11, 740, 58);
+		contentPane.add(lblNewLabel);
+		
+		txtDato = new JTextField();
+		txtDato.setCaretColor(SystemColor.menu);
+		txtDato.setEditable(false);
+		txtDato.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDato.setBorder(new TitledBorder(null, "USUARIO", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		txtDato.setBounds(130, 95, 165, 45);
+		contentPane.add(txtDato);
+		txtDato.setColumns(10);
+		
+		txtInicial = new JTextField();
+		txtInicial.setHorizontalAlignment(SwingConstants.CENTER);
+		txtInicial.setEditable(false);
+		txtInicial.setColumns(10);
+		txtInicial.setCaretColor(SystemColor.menu);
+		txtInicial.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "SALDO INICIAL", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtInicial.setBounds(305, 95, 162, 45);
+		contentPane.add(txtInicial);
+		
+		txtRestante = new JTextField();
+		txtRestante.setHorizontalAlignment(SwingConstants.CENTER);
+		txtRestante.setEditable(false);
+		txtRestante.setColumns(10);
+		txtRestante.setCaretColor(SystemColor.menu);
+		txtRestante.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "SALDO RESTANTE", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtRestante.setBounds(477, 95, 162, 45);
+		contentPane.add(txtRestante);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(245, 245, 220));
+		panel.setBounds(10, 80, 740, 4);
+		contentPane.add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(245, 245, 220));
+		panel_1.setBounds(10, 151, 740, 4);
+		contentPane.add(panel_1);
+		
+		txtDeposito = new JTextField();
+		txtDeposito.setHorizontalAlignment(SwingConstants.CENTER);
+		txtDeposito.setColumns(10);
+		txtDeposito.setCaretColor(SystemColor.activeCaptionText);
+		txtDeposito.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "MONTO A DEPOSITAR", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtDeposito.setBounds(10, 166, 165, 45);
+		contentPane.add(txtDeposito);
+		
+		cboUsu = new JComboBox();
+		cboUsu.setBorder(new TitledBorder(null, "DESTINATARIO", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		cboUsu.setBounds(185, 166, 190, 45);
+		contentPane.add(cboUsu);
+		cboUsu.addItem("Seleccione una opción");
+		cboUsu.addItem("Eliot");
+		cboUsu.addItem("Mateo");
+		cboUsu.addItem("Oscar");
+		cboUsu.addItem("Andres");
+		
+		lstDeposito = new JList();
+		lstDeposito.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "TRANSACCIONES - DEPOSITO", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		lstDeposito.setBounds(10, 278, 365, 230);
+		contentPane.add(lstDeposito);
+		
+		txtRetiro = new JTextField();
+		txtRetiro.setHorizontalAlignment(SwingConstants.CENTER);
+		txtRetiro.setColumns(10);
+		txtRetiro.setCaretColor(SystemColor.activeCaptionText);
+		txtRetiro.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "MONTO A RETIRAR", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtRetiro.setBounds(385, 166, 190, 45);
+		contentPane.add(txtRetiro);
+		
+		lstRetiro = new JList();
+		lstRetiro.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "TRANSACCIONES - RETIRO", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		lstRetiro.setBounds(385, 222, 365, 230);
+		contentPane.add(lstRetiro);
+		
+		btnDeposito = new JButton("DEPOSITAR");
+		btnDeposito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String monto = txtDeposito.getText().trim();
+				String montoDepositoStr = txtDeposito.getText().trim();
+		        
+				if (monto.equals("0")) {
+		            JOptionPane.showMessageDialog(null, "El monto debe ser mayor que 0.", "Error", JOptionPane.ERROR_MESSAGE);
+		            txtDeposito.setText("");
+		            cboUsu.setSelectedItem("Seleccione una opción");
+		            return;
+		        }
+		        
+				if (!montoDepositoStr.matches("\\d+")) {
+		            JOptionPane.showMessageDialog(null, "Debe ingresar un monto de depósito válido.", "Error", JOptionPane.ERROR_MESSAGE);
+		            txtDeposito.setText("");
+		            return;
+		        }
+		        
+		        String depositoStr = txtDeposito.getText();
+                double deposito = Double.parseDouble(depositoStr);
+
+                if (deposito > saldoRestante) {
+                    JOptionPane.showMessageDialog(null, "Fondos insuficientes. Ingrese un monto menor o igual a su saldo restante.");
+                    txtDeposito.setText("");
+                    cboUsu.setSelectedItem("Seleccione una opción");
+                    return;
+                }
+                
+                
+		        
+		        String usuario = cboUsu.getSelectedItem().toString();
+		        
+		        // Validar que se haya ingresado un monto y seleccionado un usuario
+		        if (monto.isEmpty() || usuario.equals("Seleccione una opción")) {
+		            JOptionPane.showMessageDialog(null, "Debe ingresar un monto y/o seleccionar un usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+		            txtDeposito.setText("");
+		            cboUsu.setSelectedItem("Seleccione una opción");
+		            return;
+		        }
+				
+		        double montoDeposito = Double.parseDouble(montoDepositoStr);
+
+		        saldoRestante -= montoDeposito;
+		        txtRestante.setText(String.valueOf(saldoRestante));
+
+		        String mensajeDeposito = "Se ha depositado " + montoDeposito + " nuevo(s) sol(es) al usuario " + usuario + ".";
+		        moD.addElement(mensajeDeposito);
+
+		        lstDeposito.setModel(moD);
+		        txtDeposito.setText("");
+		        cboUsu.setSelectedItem("Seleccione una opción");
+		        
+		        if (saldoRestante == 0) {
+		            JOptionPane.showMessageDialog(null, "Se ha quedado sin fondos.");
+		        }
+		    }
+		});
+		btnDeposito.setBounds(10, 222, 365, 45);
+		contentPane.add(btnDeposito);
+		
+		btnRetiro = new JButton("RETIRAR");
+		btnRetiro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String montoRetiroStr = txtRetiro.getText().trim();
+
+		        if (!montoRetiroStr.matches("\\d+")) {
+		            JOptionPane.showMessageDialog(null, "Debe ingresar un monto de retiro válido.", "Error", JOptionPane.ERROR_MESSAGE);
+		            txtRetiro.setText("");
+		            return;
+		        }
+
+		        double montoRetiro = Double.parseDouble(montoRetiroStr);
+
+		        if (montoRetiro > saldoRestante) {
+		            JOptionPane.showMessageDialog(null, "Fondos insuficientes. El monto de retiro no puede ser mayor al saldo restante.", "Error", JOptionPane.ERROR_MESSAGE);
+		            txtRetiro.setText("");
+		            return;
+		        }
+
+		        saldoRestante -= montoRetiro;
+		        txtRestante.setText(String.valueOf(saldoRestante));
+
+		        String mensajeRetiro = "Se ha retirado S/" + montoRetiro + " nuevo(s) sol(es) de la cuenta.";
+		        moR.addElement(mensajeRetiro);
+
+		        lstRetiro.setModel(moR);
+		        txtRetiro.setText("");
+		        
+		        if (saldoRestante == 0) {
+		            JOptionPane.showMessageDialog(null, "Se ha quedado sin fondos.");
+		        }
+			}
+		});
+		btnRetiro.setBounds(585, 166, 165, 45);
+		contentPane.add(btnRetiro);
+		
+		btnLimpiar = new JButton("LIMPIAR");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtDeposito.setText("");
+				txtRetiro.setText("");
+				cboUsu.setSelectedItem("Seleccione una opción");
+				moR.clear();
+			}
+		});
+		btnLimpiar.setBounds(385, 463, 82, 45);
+		contentPane.add(btnLimpiar);
+		
+		btnCambio = new JButton("CAMBIAR USUARIO");
+		btnCambio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmLogin frmInicioSesion = new frmLogin();
+		        frmInicioSesion.setVisible(true);
+		        dispose();
+			}
+		});
+		btnCambio.setBounds(477, 463, 181, 45);
+		contentPane.add(btnCambio);
+		
+		btnSalir = new JButton("SALIR");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnSalir.setBounds(668, 463, 82, 45);
+		contentPane.add(btnSalir);
+		
+	}
+}

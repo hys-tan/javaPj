@@ -1,0 +1,155 @@
+package pFormulario;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class frmLogin extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtUsuario;
+	private JTextField txtContraseña;
+	
+	private String datoRecibido;
+	
+	String[] aUsuario = {"Eliot", "Mateo", "Oscar", "Andres"};
+	String[] aContraseña = {"1482", "1481", "1478", "1480"};
+	int intentosRestantes=1;
+	
+	DefaultListModel moR=new DefaultListModel();
+	
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					frmLogin frame = new frmLogin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Create the frame.
+	 */
+	public frmLogin() {
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 358, 416);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(176, 224, 230));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("PERÚ BANK");
+		lblNewLabel.setFont(new Font("Tw Cen MT", Font.ITALIC, 38));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 342, 103);
+		contentPane.add(lblNewLabel);
+		
+		txtUsuario = new JTextField();
+		txtUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUsuario.setBorder(new TitledBorder(null, "USUARIO", TitledBorder.CENTER, TitledBorder.TOP, null, null));
+		txtUsuario.setBounds(64, 97, 214, 46);
+		contentPane.add(txtUsuario);
+		txtUsuario.setColumns(10);
+		
+		txtContraseña = new JPasswordField();
+		txtContraseña.setHorizontalAlignment(SwingConstants.CENTER);
+		txtContraseña.setColumns(10);
+		txtContraseña.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "CONTRASE\u00D1A", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		txtContraseña.setBounds(64, 168, 214, 46);
+		contentPane.add(txtContraseña);
+		((JPasswordField) txtContraseña).setEchoChar('•');
+		
+		JButton btnLogin = new JButton("INICIAR SESIÓN");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String usuario = txtUsuario.getText();
+		        String contraseña = txtContraseña.getText();
+		        boolean usuarioValido = false;
+
+		        for (int i = 0; i < aUsuario.length; i++) {
+		            if (aUsuario[i].equals(usuario) && aContraseña[i].equals(contraseña)) {
+		            	
+		            	String dato = txtUsuario.getText();
+						frmMenu frm = new frmMenu();
+						frm.setDatoRecibido(dato);
+			        		frm.setVisible(true);
+			        		// Cerrar el frmLogin si es necesario
+			        		dispose();
+		            	
+		                usuarioValido = true;
+		                break;
+		            }
+		        }
+		        
+		        if (usuarioValido) {
+		        	
+		            JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso" + " ¡Bienvenido " + usuario + "!");
+		            frmMenu frmVista = new frmMenu();
+		            frmVista.setVisible(false);
+		            dispose();
+		        } else {
+		            intentosRestantes++;
+		            int intentosRestantesMaximos = 4;
+		            if (intentosRestantes <= intentosRestantesMaximos) {
+		                int intentosRestantesActuales = intentosRestantesMaximos - intentosRestantes;
+		                if (intentosRestantesActuales == 0) {
+		                	
+		                	
+		                	
+		                    JOptionPane.showMessageDialog(null, "Ya no tiene intentos restantes");
+		                    System.exit(0);
+		                } else {
+		                    JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos, le quedan " + intentosRestantesActuales + " intento(s)");
+		                    txtUsuario.setText("");
+		                    txtContraseña.setText("");
+		                }
+		            }
+		        }
+		        
+		    }
+		});
+		btnLogin.setBounds(64, 236, 214, 46);
+		contentPane.add(btnLogin);
+		
+		JButton btnSalir = new JButton("SALIR");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnSalir.setBounds(64, 303, 214, 46);
+		contentPane.add(btnSalir);
+	}
+	
+	public void setDatoRecibido(String dato) {
+	    frmMenu frm = new frmMenu();
+	    frm.setDatoRecibido(dato);
+	}
+}
